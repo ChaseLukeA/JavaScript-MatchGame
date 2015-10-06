@@ -1,0 +1,91 @@
+body {
+  background-color: #004c5b;
+  background-image: url(../images/bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: Arial, Verdana, sans-serif;
+  font-size: 16px;
+}
+
+input[type=button] {
+  height: 50px;
+  font-size: 17px;
+  margin: 5px;
+  width: 150px;
+}
+
+/* global main content */
+#wrapper {
+  background-color: rgba(134,130,127,.5);
+  background: rgb(194,194,193); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(194,194,193,.5) 0%, rgba(73,108,114,.5) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(194,194,193,.5)), color-stop(100%,rgba(73,108,114,.5))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(194,194,193,.5) 0%,rgba(73,108,114,.5) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(194,194,193,.5) 0%,rgba(73,108,114,.5) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(194,194,193,.5) 0%,rgba(73,108,114,.5) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(194,194,193,.5) 0%,rgba(73,108,114,.5) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c2c2c1', endColorstr='#496c72',GradientType=0 ); /* IE6-9 */
+  border: 2px solid #934800;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px #ac7139);
+  padding: 20px;
+  /* centers wrapper in background */
+  margin: 10px auto auto;
+  max-width: 960px;
+}
+
+#title_screen img {
+  display: block;
+  margin: auto;
+  padding: 10px;
+}
+
+#game_setup_screen {
+  margin: auto;
+}
+
+#game_setup_screen table {
+  border: 2px solid #934800;
+  margin: auto;
+}
+
+#game_setup_screen td, #game_setup_screen tr {
+  background-color: #86827f;
+  border: 2px solid #006c80;
+  margin: 10px auto;
+  padding: 10px;
+  text-align: center;
+}
+
+#game_setup_screen td h3 {
+  margin: 3px;
+}
+
+#game_board {
+  background-color: #555555;
+  border: 2px solid #393939;
+  border-radius: 5px;
+  margin: auto;
+  max-width: 900px;
+}
+
+#game_board img {
+  border: 2px solid #000000;
+  display: block;
+  float: left;
+  margin: 1px;
+}
+
+#game_won_screen {
+  text-align: center;
+  margin: 20px, auto;
+}
+
+#message h1 {
+  margin: 10px, 0px, 20px, 0px;
+  text-shadow: 2px 2px 4px #ffffff;
+}
+
+#game_won_screen input {
+  margin: 20px, auto;
+}

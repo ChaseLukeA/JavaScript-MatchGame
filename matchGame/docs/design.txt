@@ -1,0 +1,260 @@
+NOUNS AND VERBS
+
+  Problem Statement: My idea for the final project is a match game with
+tiles, with a choice of easy (4x4) or hard (6x6). The program will ask for
+your name, ask how difficult you want it to be and also give you a choice of
+the tiles you'd like to play with (I'm going to start with a base set of kids,
+technology and everyday items). Then it will randomly place pairs of tile
+variables in a 4x4 or 6x6 configuration and display the same image on all
+tiles. When a tile is clicked it would show the actual image assigned to the
+variable. I would like the tile animated to flip over (using events and css to
+alter images) to show the actual image. If two flipped are not a match it will
+hide them again. When a match of two is made the matched pair will stay
+showing on the screen. When all matches are made the game will be over and
+give the option to replay again. In addition to the actual game play the whole
+game will be timed and in the end I'd like the user name you chose to be
+displayed at the end with your completion time. 
+  
+  Nouns: name, difficulty, choice of tiles, image, tile images, option,
+         completion time
+  
+  Verbs: ask for name, ask for difficulty, choice of tiles, randomly place,
+         display same image, show actual image, animate, if not match hide,
+         if match stay showing, option to replay, timed, display
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+DEFINING DIAGRAM
+  
+  INPUTS:
+    userName
+    difficultyLevel
+    tileSet
+    timeStarted
+    timeFinished
+    timeTotal
+
+    replayGame
+    scoreBoard
+    
+  PROCESSING:
+    prompt for userName
+    prompt for difficultyLevel
+    prompt for tileSet
+    randomize tiles in pairs to 2x2, 4x4 or 6x6 config based on tileSet choice
+    set each set to a different card face image
+    display same card back image for all placed cards
+    set timeStarted to current date/time
+    if user clicks a card, do flip animation and show card face image on card
+    if user clicks second card and is same value as first, keep both cards
+      displaying card face image and stop click events on those two cards;
+      otherwise do flip animation on both to revert to card back image again
+    when all card pairs are matched, set timeFinished to current date/time
+    set timeTotal to timeFinished minus timeStarted
+    display "Great job userName!"
+    display "You completed the difficultyLevel Match Game in timeTotal!"
+    // set scoreBoard to scoreBoard plus \n userName - timeTotal
+    // sort scoreBoard timeTotal by smallest timeTotal
+    prompt for replayGame
+    if replayGame is "Replay" start at step "randomize tiles in pairs..."
+      otherwise if "New Game" start at first step "prompt for userName"
+    
+  OUTPUTS: Tiles on the board in 2x2, 4x4 or 6x6 configuration
+           Your name, tile selection and difficulty level at the bottom
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    
+SOLUTION ALGORITHM
+  
+YourAlgorithmName
+  Initialize gameBoard to array with hash [tileID: #, image: #, matchMade: false]
+  Initialize gameWon to false
+  Initialize numberOfTiles to 0
+  // don't assign pics until tileSet selected to save memory
+  Initialize tileSet to array
+
+  Prompt for userName with "Enter your name:"
+  Prompt for tileSet with radio button showing images (with text imbedded)
+    for "() Kids   () Everyday Items"
+  Prompt for difficultyLevel with radio button stating "Select the
+    difficulty level you would like () Easy (2x2) () Normal (4x4) () Hard (6x6)"
+
+  CASE OF
+    // the 0 var is the card back image for the tileSet, 1-18 are card face
+    "Kids": tileSet = [19 variables with matching kids pictures]
+    "Tech": tileSet = [19 variables with matching tech pictures]
+    "Everyday": tileSet = [19 variables with matching everyday item pictures]
+  ENDCASE
+
+  IF difficultyLevel is easy THEN 
+    Set numberOfTiles to 4
+    Call placeTiles passing (numberOfTiles)
+  ELSE (if difficultyLevel is hard)
+    Set numberOfTiles to 36
+    Call placeTiles passing (numberOfTiles)
+  ELSE
+    Set numberOfTiles to 16
+  ENDIF
+
+  FUNCTION placeTiles (pass tileNum)
+    Initialize gridSize to square root of tileNum
+    Pull index 0 for card back image, randomly place pairs of tileNum
+    variables from tileSet indexes 1-18 into gameBoard array tileID: # and
+    image: # displayed in a gridSize x gridSize grid (where each row is
+    gridSize numbers long)
+
+    IF gameBoard tileID: # less than 2 from tileSet THEN
+      Assign random tileSet # to current gameBoard tileID: # slot
+    ELSE
+      chose a different random tileSet # to assign to current gameBoard slot
+    ENDIF
+  ENDFUNCTION
+
+  Set timeStart to current date and time
+
+  WHILE not gameWon DO
+    IF click on gameBoard tileID: # THEN
+      IF gameBoard matchMade: false THEN
+        FUNCTION tileFlip (pass gameBoard array # as numberOfTiles)
+          Transform distart / shrink card back image with css from full to thin
+          Transform distort / grow card front image with css from thin to full
+        ENDFUNCTION
+
+        IF tempSelection1 equals "" THEN
+          Set tempSelection1 to tileSet #
+        ELSE      // tempSelection1 equals a value (one tile selected currently)
+          Set tempSelection2 to tileSet #
+
+          IF tempSelection1 is not equal to tempSelection2 THEN
+            tileFlip (pass gameBoard array # for tempSelection1)
+            tileFlip (pass gameBoard array # for tempSelection2)
+            Set tempSelection1 to ""
+            Set tempSelection2 to ""
+          ELSE
+            // the tiles stay showing
+            Set gameBoard array matchMade for #1 to true
+            Set gameBoard array matchMade for #2 to true
+          ENDIF
+        ENDIF
+      ENDIF
+
+      // Checks all tiles for true/false on matchMade
+      Set gameWon to checkForGameWon ()
+
+      FUNCTION checkForGameWon ()
+        LOOP FOR count 1 to numberOfTiles
+          IF gameBoard [count] matchMade is false THEN
+            return false   // first false found returns false to continue game
+          ELSE    // it makes it thru the for loop with no false values found
+            IF count equals numberOfTiles THEN
+              return true
+            ELSE   // it finds a true value, add 1 to count
+              Set count equal to count plus 1
+            ENDIF
+          ENDIF
+        ENDLOOP
+      ENDFUNCTION
+
+    ENDIF 
+  ENDWHILE
+
+  Set timeFinished to current date and time
+  Set timeTotal equal to timeFinished minus timeStart
+    
+  Display "Great job " + username + "!\n"
+  Display "You completed the " + difficultyLevel + " Match Game in " +
+    timeTotal + "!"
+  // set scoreBoard to scoreBoard plus \n userName - timeTotal
+  // sort scoreBoard timeTotal by smallest timeTotal
+  Prompt for replayGame with buttons "Replay" and "New Game"
+  IF replayGame is "Replay" THEN
+    start at first step "prompt for userName"
+  ELSE "New Game"
+    refresh page
+  ENDIF
+    
+END
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+TEST PLANS FOR SOLUTION ALGORITHM
+  
+  TEST CASE 1:
+  
+    INPUT VALUES: Luke, Kids, Easy
+  
+    EXPECTED RESULT: username: Luke
+                     tileSelection: Kids
+                     difficulty: Easy
+                     game board will be 2 x 2 squares
+  
+    ACTUAL RESULT: username: Luke
+                   tileSelection: Kids
+                   difficulty: Easy
+                   game board is 2 x 2 squares
+  
+  TEST CASE 2:
+  
+    INPUT VALUES: Chase, Everyday Items, Normal
+  
+    EXPECTED RESULT: username: Chase
+                     tileSelection: Everyday Items
+                     difficulty: Normal
+                     game board will be 4 x 4 squares
+  
+    ACTUAL RESULT: username: Luke
+                   tileSelection: Everyday Items
+                   difficulty: Normal
+                   game board is 4 x 4 squares
+  
+  TEST CASE 3:
+  
+    INPUT VALUES: [blank], [neither clicked], [no radios selected]
+  
+    EXPECTED RESULT: username: ""
+                     tileSelection: Everyday Items
+                     difficulty: Normal
+                     game board will be 4 x 4 squares
+  
+    ACTUAL RESULT: username: ""
+                   tileSelection: Everyday Items
+                   difficulty: Normal
+                   game board is 4 x 4 squares
+  
+  
+  TEST CASE 4:
+  
+    INPUT VALUES: alert("hello!");, Kids, Hard
+  
+    EXPECTED RESULT: username: alert("hello!");
+                     tileSelection: Kids
+                     difficulty: Hard
+                     game board will be 6 x 6 squares
+  
+    ACTUAL RESULT: username: alert("hello!");
+                   tileSelection: Kids
+                   difficulty: Hard
+                   game board is 6 x 6 squares
+  
+  TEST CASE 5:
+  
+    INPUT VALUES: Bob, Everyday Items, Hard
+  
+    EXPECTED RESULT: username: Bob
+                     tileSelection: Everyday Items
+                     difficulty: Hard
+                     game board will be 6 x 6 squares
+  
+    ACTUAL RESULT: username: Bob
+                   tileSelection: Everyday Items
+                   difficulty: Hard
+                   game board will be 6 x 6 squares
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+NOTES
+
+All images were free, royalty free icons or vector images found online
+from several different sources. The rest were created in Adobe Photoshop
+using the tools available there.
+
