@@ -1,7 +1,7 @@
 # JavaScript-MatchGame
-Created by Luke A Chase
-chase.luke.a@gmail.com
-Copyright 2014
+-Created by Luke A Chase
+-chase.luke.a@gmail.com
+-Copyright 2014
 
 This is my first ever JavaScript app written.
 I know the code may be inefficient in places,
